@@ -1,0 +1,34 @@
+class Solution {
+public:
+    char pairParentheses(char p) {
+        char result;
+        switch (p) {
+            case ')':
+                result = '(';
+                break;
+            case '}':
+                result = '{';
+                break;
+            case ']':
+                result = '[';
+                break;
+        }
+        return result;
+    }
+
+    bool isValid(string s) {
+        stack<char> ps;
+        for (char c : s) {
+            if (c == '(' || c == '{' || c == '[') {
+                ps.push(c);
+            } else {
+                if (!ps.empty() && ps.top() == pairParentheses(c)) {
+                    ps.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        return ps.empty();
+    }
+};

@@ -1,0 +1,9 @@
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        string xs = to_string(x);
+        string rxs = to_string(x);
+        reverse(rxs.begin(), rxs.end());
+        return xs == rxs;
+    }
+};
