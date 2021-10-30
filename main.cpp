@@ -1,41 +1,43 @@
 #include <iostream>
-#include <stack>
+#include <vector>
 
 using namespace std;
 
-char pairParentheses(char p) {
-    char result;
-    switch (p) {
-        case ')':
-            result = '(';
-            break;
-        case '}':
-            result = '{';
-            break;
-        case ']':
-            result = '[';
-            break;
+int getValue(vector<int>& nums, int index) {
+    if (nums.size() <= index) {
+        return 2147483647;
     }
-    return result;
+    return nums[index];
 }
 
-bool isValid(string s) {
-    stack<char> ps;
-    for (char c : s) {
-        if (c == '(' || c == '{' || c == '[') {
-            ps.push(c);
+double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+    int size = nums1.size() + nums2.size();
+    int mid = (size / 2);
+    int idx1 = 0;
+    int idx2 = 0;
+    double current = 0.0;
+    double preCurrent = 0.0;
+    for (int i = 0; i <= mid; i++) {
+        if (getValue(nums1, idx1) <= getValue(nums2, idx2)) {
+            preCurrent = current;
+            current = double(nums1[idx1]);
+            idx1++;
         } else {
-            if (!ps.empty() && ps.top() == pairParentheses(c)) {
-                ps.pop();
-            } else {
-                return false;
-            }
+            preCurrent = current;
+            current = double(nums2[idx2]);
+            idx2++;
         }
     }
-    return ps.empty();
+    if (size % 2 == 0) {
+        return (current + preCurrent) / 2;
+    } else {
+        return current;
+    }
 }
 
 int main() {
-    cout << isValid("[") << endl;
+    vector<int> nums1{};
+    vector<int> nums2{1};
+    cout << findMedianSortedArrays(nums1, nums2) << endl;
     return 0;
 }

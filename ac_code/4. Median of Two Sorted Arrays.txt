@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int getValue(vector<int>& nums, int index) {
+        if (nums.size() <= index) {
+            return 2147483647;
+        }
+        return nums[index];
+    }
+
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int size = nums1.size() + nums2.size();
+        int mid = (size / 2);
+        int idx1 = 0;
+        int idx2 = 0;
+        double current = 0.0;
+        double preCurrent = 0.0;
+        for (int i = 0; i <= mid; i++) {
+            if (getValue(nums1, idx1) <= getValue(nums2, idx2)) {
+                preCurrent = current;
+                current = double(nums1[idx1]);
+                idx1++;
+            } else {
+                preCurrent = current;
+                current = double(nums2[idx2]);
+                idx2++;
+            }
+        }
+        if (size % 2 == 0) {
+            return (current + preCurrent) / 2;
+        } else {
+            return current;
+        }
+    }
+};
