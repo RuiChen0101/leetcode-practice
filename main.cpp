@@ -1,43 +1,35 @@
 #include <iostream>
+#include <string>
 #include <vector>
 
 using namespace std;
 
-int getValue(vector<int>& nums, int index) {
-    if (nums.size() <= index) {
-        return 2147483647;
-    }
-    return nums[index];
-}
-
-double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-    int size = nums1.size() + nums2.size();
-    int mid = (size / 2);
-    int idx1 = 0;
-    int idx2 = 0;
-    double current = 0.0;
-    double preCurrent = 0.0;
-    for (int i = 0; i <= mid; i++) {
-        if (getValue(nums1, idx1) <= getValue(nums2, idx2)) {
-            preCurrent = current;
-            current = double(nums1[idx1]);
-            idx1++;
+string convert(string s, int numRows) {
+    int pl = numRows == 1 ? 1 : (numRows << 1) - 2;
+    vector<int> pattern;
+    vector<string> rows;
+    for (int i = 0; i < pl; i++) {
+        if (i < numRows) {
+            pattern.push_back(i);
+            rows.push_back("");
         } else {
-            preCurrent = current;
-            current = double(nums2[idx2]);
-            idx2++;
+            pattern.push_back((numRows << 1) - i - 2);
         }
     }
-    if (size % 2 == 0) {
-        return (current + preCurrent) / 2;
-    } else {
-        return current;
+    for (int i = 0; i < s.length(); i++) {
+        char c = s[i];
+        int tRow = pattern[i % pl];
+        rows[tRow] += c;
     }
+    string result = "";
+    for (int i = 0; i < numRows; i++) {
+        result += rows[i];
+    }
+    return result;
 }
 
 int main() {
-    vector<int> nums1{};
-    vector<int> nums2{1};
-    cout << findMedianSortedArrays(nums1, nums2) << endl;
+    string s = "PAYPALISHIRING";
+    cout << convert(s, 3) << endl;
     return 0;
 }
