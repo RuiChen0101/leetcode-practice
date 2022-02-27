@@ -4,32 +4,64 @@
 
 using namespace std;
 
-string convert(string s, int numRows) {
-    int pl = numRows == 1 ? 1 : (numRows << 1) - 2;
-    vector<int> pattern;
-    vector<string> rows;
-    for (int i = 0; i < pl; i++) {
-        if (i < numRows) {
-            pattern.push_back(i);
-            rows.push_back("");
-        } else {
-            pattern.push_back((numRows << 1) - i - 2);
-        }
-    }
-    for (int i = 0; i < s.length(); i++) {
-        char c = s[i];
-        int tRow = pattern[i % pl];
-        rows[tRow] += c;
-    }
+string intToRoman(int num) {
     string result = "";
-    for (int i = 0; i < numRows; i++) {
-        result += rows[i];
+    if (num >= 1000) {
+        result += string(num / 1000, 'M');
+        num %= 1000;
+    }
+    if (num >= 900) {
+        result += "CM";
+        num %= 900;
+    }
+    if (num >= 500) {
+        result += string(num / 500, 'D');
+        num %= 500;
+    }
+    if (num >= 400) {
+        result += "CD";
+        num %= 400;
+    }
+    if (num >= 100) {
+        result += string(num / 100, 'C');
+        num %= 100;
+    }
+    if (num >= 90) {
+        result += "XC";
+        num %= 90;
+    }
+    if (num >= 50) {
+        result += string(num / 50, 'L');
+        num %= 50;
+    }
+    if (num >= 40) {
+        result += "XL";
+        num %= 40;
+    }
+    if (num >= 10) {
+        result += string(num / 10, 'X');
+        num %= 10;
+    }
+    if (num >= 9) {
+        result += "IX";
+        num %= 9;
+    }
+    if (num >= 5) {
+        result += string(num / 5, 'V');
+        num %= 5;
+    }
+    if (num >= 4) {
+        result += "IV";
+        num %= 4;
+    }
+    if (num >= 1) {
+        result += string(num / 1, 'I');
+        num %= 1;
     }
     return result;
 }
 
 int main() {
-    string s = "PAYPALISHIRING";
-    cout << convert(s, 3) << endl;
+    cout << intToRoman(3) << endl;
     return 0;
 }
