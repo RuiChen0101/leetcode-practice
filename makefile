@@ -3,7 +3,7 @@
 all: directories main
 
 main: main.cpp
-	g++ -std=c++11 main.cpp -o bin/main
+	g++ -std=c++14 main.cpp -o bin/main
 
 directories:
 	mkdir -p bin

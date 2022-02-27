@@ -1,67 +1,25 @@
 #include <iostream>
-#include <string>
-#include <vector>
+#include <regex>
 
 using namespace std;
 
-string intToRoman(int num) {
+string longestCommonPrefix(vector<string>& strs) {
+    string refStr = strs[0];
     string result = "";
-    if (num >= 1000) {
-        result += string(num / 1000, 'M');
-        num %= 1000;
-    }
-    if (num >= 900) {
-        result += "CM";
-        num %= 900;
-    }
-    if (num >= 500) {
-        result += string(num / 500, 'D');
-        num %= 500;
-    }
-    if (num >= 400) {
-        result += "CD";
-        num %= 400;
-    }
-    if (num >= 100) {
-        result += string(num / 100, 'C');
-        num %= 100;
-    }
-    if (num >= 90) {
-        result += "XC";
-        num %= 90;
-    }
-    if (num >= 50) {
-        result += string(num / 50, 'L');
-        num %= 50;
-    }
-    if (num >= 40) {
-        result += "XL";
-        num %= 40;
-    }
-    if (num >= 10) {
-        result += string(num / 10, 'X');
-        num %= 10;
-    }
-    if (num >= 9) {
-        result += "IX";
-        num %= 9;
-    }
-    if (num >= 5) {
-        result += string(num / 5, 'V');
-        num %= 5;
-    }
-    if (num >= 4) {
-        result += "IV";
-        num %= 4;
-    }
-    if (num >= 1) {
-        result += string(num / 1, 'I');
-        num %= 1;
+    if (refStr == "") return "";
+    for (int i = 0; i < refStr.length(); i++) {
+        string prefix = refStr.substr(0, i + 1);
+        regex reg("^" + prefix + "\\w*");
+        for (int j = 1; j < strs.size(); j++) {
+            if (!regex_match(strs[j], reg)) return result;
+        }
+        result = prefix;
     }
     return result;
 }
 
 int main() {
-    cout << intToRoman(3) << endl;
+    vector<string> strs = {"ab", "a"};
+    cout << longestCommonPrefix(strs) << endl;
     return 0;
 }
