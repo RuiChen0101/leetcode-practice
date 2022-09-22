@@ -1,25 +1,25 @@
 #include <iostream>
-#include <regex>
+#include <vector>
 
 using namespace std;
 
-string longestCommonPrefix(vector<string>& strs) {
-    string refStr = strs[0];
-    string result = "";
-    if (refStr == "") return "";
-    for (int i = 0; i < refStr.length(); i++) {
-        string prefix = refStr.substr(0, i + 1);
-        regex reg("^" + prefix + "\\w*");
-        for (int j = 1; j < strs.size(); j++) {
-            if (!regex_match(strs[j], reg)) return result;
+int searchInsert(vector<int>& nums, int target) {
+    int start = 0;
+    int end = nums.size() - 1;
+    int mid = start + (end - start) / 2;
+    while (start <= end) {
+        if (nums.at(mid) >= target) {
+            end = mid - 1;
+        } else {
+            start = mid + 1;
         }
-        result = prefix;
+        mid = start + (end - start) / 2;
     }
-    return result;
+    return mid;
 }
 
 int main() {
-    vector<string> strs = {"ab", "a"};
-    cout << longestCommonPrefix(strs) << endl;
+    vector<int> nums = {1, 3, 5, 6};
+    cout << searchInsert(nums, 4) << endl;
     return 0;
 }
