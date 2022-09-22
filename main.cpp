@@ -3,23 +3,26 @@
 
 using namespace std;
 
-int searchInsert(vector<int>& nums, int target) {
-    int start = 0;
-    int end = nums.size() - 1;
-    int mid = start + (end - start) / 2;
-    while (start <= end) {
-        if (nums.at(mid) >= target) {
-            end = mid - 1;
-        } else {
-            start = mid + 1;
-        }
-        mid = start + (end - start) / 2;
-    }
-    return mid;
+void rotate(vector<int>& nums, int k) {
+    int len = nums.size();
+    k = k % len;
+    auto start = nums.begin();
+    auto mid = start + (len - k);
+    auto end = nums.end();
+
+    vector<int> result(len);
+
+    copy(mid, end, result.begin());
+    copy(start, mid, result.begin() + k);
+    nums = result;
 }
 
 int main() {
-    vector<int> nums = {1, 3, 5, 6};
-    cout << searchInsert(nums, 4) << endl;
+    vector<int> nums = {1, 2, 3, 4, 5, 6, 7};
+    rotate(nums, 11);
+    for (int n : nums) {
+        cout << n << " ";
+    }
+    cout << endl;
     return 0;
 }
