@@ -31,3 +31,28 @@ public:
         return result;
     }
 };
+
+// 09/24 update, its slower...?????
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int len = nums.size();
+        int end = len - 1;
+        int start = 0;
+        int idx = len - 1;
+        vector<int> result(len);
+        while (idx >= 0) {
+            int endSqr = nums[end] * nums[end];
+            int startSqr = nums[start] * nums[start];
+            if (endSqr > startSqr) {
+                result[idx] = endSqr;
+                end--;
+            } else {
+                result[idx] = startSqr;
+                start++;
+            }
+            idx--;
+        }
+        return result;
+    }
+};
