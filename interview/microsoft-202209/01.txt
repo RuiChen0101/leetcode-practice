@@ -1,0 +1,26 @@
+#include <algorithm>
+#include <iostream>
+
+int solution(int A, int B) {
+    int max = 0;
+    max = std::max(max, B / 4);
+    if (A >= (B / 3)) {
+        max = std::max(max, B / 3);
+    }
+
+    if (A >= B) {
+        max = std::max(max, B / 2);
+    }
+
+    if (B >= (A / 3)) {
+        max = std::max(max, A / 3);
+    }
+
+    max = std::max(max, A / 4);
+    return max;
+}
+
+int main() {
+    std::cout << solution(1, 8) << std::endl;
+    return 0;
+}

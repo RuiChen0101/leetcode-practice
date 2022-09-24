@@ -1,0 +1,27 @@
+#include <iostream>
+#include <vector>
+
+int solution(std::vector<int> &A) {
+    int len = A.size();
+    int sum = 0;
+    for (int a : A) {
+        sum += a;
+    }
+    int target = sum / len + (sum % len != 0 ? 1 : 0);
+    int spare = 0;
+    int require = 0;
+    for (int a : A) {
+        if (a > target) {
+            spare += a - target;
+        } else if (a < target) {
+            require += target - a;
+        }
+    }
+    return spare + (require - spare);
+}
+
+int main() {
+    std::vector<int> A = {4, 2, 4, 6};
+    std::cout << solution(A) << std::endl;
+    return 0;
+}

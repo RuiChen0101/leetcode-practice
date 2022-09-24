@@ -1,22 +1,32 @@
-#include <algorithm>
 #include <iostream>
-#include <string>
+#include <map>
+#include <vector>
 
-using namespace std;
-
-string reverseWords(string s) {
-    int i = 0;
-    for (int j = 0; j < s.length(); j++) {
-        if (s[j] == ' ') {
-            reverse(s.begin() + i, s.begin() + j);
-            i = j + 1;
+bool solution(std::vector<int> &A, std::vector<int> &P, int B, int E) {
+    if (B == E) return true;
+    std::map<int, bool> aval;
+    for (int i = 0; i < P.size(); i++) {
+        int p = P[i];
+        for (int j = 0; j <= A[i]; j++) {
+            if (j != A[i]) {
+                aval.insert(std::make_pair(p + j, true));
+            }
+            if (p - j >= 0) {
+                aval.insert(std::make_pair(p - j, true));
+            }
         }
     }
-    reverse(s.begin() + i, s.end());
-    return s;
+    int start = B < E ? B : E;
+    int end = B >= E ? B : E;
+    for (int i = start; i < end; i++) {
+        if (!aval[i]) return false;
+    }
+    return true;
 }
 
 int main() {
-    cout << reverseWords("Let's take LeetCode contest") << endl;
+    std::vector<int> A = {1, 3};
+    std::vector<int> P = {2, 6};
+    std::cout << solution(A, P, 0, 5) << std::endl;
     return 0;
 }
