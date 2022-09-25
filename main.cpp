@@ -2,31 +2,30 @@
 #include <map>
 #include <vector>
 
-bool solution(std::vector<int> &A, std::vector<int> &P, int B, int E) {
-    if (B == E) return true;
-    std::map<int, bool> aval;
-    for (int i = 0; i < P.size(); i++) {
-        int p = P[i];
-        for (int j = 0; j <= A[i]; j++) {
-            if (j != A[i]) {
-                aval.insert(std::make_pair(p + j, true));
-            }
-            if (p - j >= 0) {
-                aval.insert(std::make_pair(p - j, true));
-            }
+struct ListNode {
+    int val;
+    ListNode* next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode* next) : val(x), next(next) {}
+};
+
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+    int count = 0;
+    ListNode* prev = head;
+    ListNode* current = head;
+    while (current->next != nullptr) {
+        current = current->next;
+        count++;
+        if (count > n) {
+            prev = prev->next;
         }
     }
-    int start = B < E ? B : E;
-    int end = B >= E ? B : E;
-    for (int i = start; i < end; i++) {
-        if (!aval[i]) return false;
+    if (count == (n - 1)) {
+        return head->next;
     }
-    return true;
+    prev->next = prev->next->next;
+    return head;
 }
 
-int main() {
-    std::vector<int> A = {1, 3};
-    std::vector<int> P = {2, 6};
-    std::cout << solution(A, P, 0, 5) << std::endl;
-    return 0;
-}
+int main() { return 0; }
