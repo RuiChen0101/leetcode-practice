@@ -1,0 +1,19 @@
+class Solution {
+    vector<vector<int>> pathFind(vector<vector<int>>& image, int sr, int sc, int target, int color) {
+        if (sr < 0 || sr >= image.size() || sc < 0 || sc >= image[0].size())
+            return image;
+        if (image[sr][sc] != target) return image;
+        image[sr][sc] = color;
+        pathFind(image, sr + 1, sc, target, color);
+        pathFind(image, sr - 1, sc, target, color);
+        pathFind(image, sr, sc + 1, target, color);
+        pathFind(image, sr, sc - 1, target, color);
+        return image;
+    }
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int target = image[sr][sc];
+        if (target == color) return image;
+        return pathFind(image, sr, sc, target, color);
+    }
+};

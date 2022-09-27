@@ -1,0 +1,37 @@
+class Solution {
+    bool areVectorsEqual(vector<int> a, vector<int> b) {
+        for (int i = 0; i < 26; i++) {
+            if (a[i] != b[i]) return false;
+        }
+        return true;
+    }
+public:
+    vector<int> findAnagrams(string s, string p) {
+        int lenS = s.length();
+        int lenP = p.length();
+
+        vector<int> vS(26, 0);
+        vector<int> vP(26, 0);
+
+        for (char c : p) {
+            vP[c - 'a']++;
+        }
+
+        vector<int> appr;
+        int i = 0, j = 0;
+        while (i < lenS) {
+            vS[s[i] - 'a']++;
+
+            if (i - j + 1 == lenP && areVectorsEqual(vP, vS)) appr.push_back(j);
+
+            if (i - j + 1 < lenP) {
+                i++;
+            } else {
+                vS[s[j] - 'a']--;
+                i++;
+                j++;
+            }
+        }
+        return appr;
+    }
+};
