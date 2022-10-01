@@ -1,0 +1,41 @@
+class Solution {
+    int safeAccess(vector<vector<int>>& mat, int i, int j) {
+        if (i < 0 || j < 0 || i >= mat.size() || j >= mat[0].size()) return -1;
+        return mat[i][j];
+    }
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        queue<pair<int, int>> q;
+        for (int i = 0; i < mat.size(); i++) {
+            for (int j = 0; j < mat[0].size(); j++) {
+                if (mat[i][j] == 0)
+                    q.push(make_pair(i, j));
+                else
+                    mat[i][j] = INT_MAX;
+            }
+        }
+
+        while (!q.empty()) {
+            pair<int, int> pos = q.front();
+            q.pop();
+            int val = mat[pos.first][pos.second] + 1;
+            if (safeAccess(mat, pos.first + 1, pos.second) > val) {
+                mat[pos.first + 1][pos.second] = val;
+                q.push(make_pair(pos.first + 1, pos.second));
+            }
+            if (safeAccess(mat, pos.first - 1, pos.second) > val) {
+                mat[pos.first - 1][pos.second] = val;
+                q.push(make_pair(pos.first - 1, pos.second));
+            }
+            if (safeAccess(mat, pos.first, pos.second + 1) > val) {
+                mat[pos.first][pos.second + 1] = val;
+                q.push(make_pair(pos.first, pos.second + 1));
+            }
+            if (safeAccess(mat, pos.first, pos.second - 1) > val) {
+                mat[pos.first][pos.second - 1] = val;
+                q.push(make_pair(pos.first, pos.second - 1));
+            }
+        }
+        return mat;
+    }
+};
