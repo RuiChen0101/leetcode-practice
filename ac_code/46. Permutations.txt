@@ -1,0 +1,26 @@
+class Solution {
+    void swap(int &i, int &j) {
+        int temp = i;
+        i = j;
+        j = temp;
+    }
+
+    void recur(vector<vector<int>> &res, vector<int> &nums, int n) {
+        if (n == nums.size()) {
+            res.push_back(nums);
+            return;
+        }
+
+        for (int i = n; i < nums.size(); i++) {
+            swap(nums[i], nums[n]);
+            recur(res, nums, n + 1);
+            swap(nums[i], nums[n]);
+        }
+    }
+public:
+    vector<vector<int>> permute(vector<int> &nums) {
+        vector<vector<int>> res;
+        recur(res, nums, 0);
+        return res;
+    }
+};

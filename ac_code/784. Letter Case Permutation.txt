@@ -1,0 +1,28 @@
+class Solution {
+    void recur(vector<string> &res, string &s, string &str, int n) {
+        if (n == s.length()) {
+            res.push_back(str);
+            return;
+        }
+
+        if (isalpha(s[n])) {
+            str += toupper(s[n]);
+            recur(res, s, str, n + 1);
+            str.pop_back();
+            str += tolower(s[n]);
+            recur(res, s, str, n + 1);
+            str.pop_back();
+        } else {
+            str += s[n];
+            recur(res, s, str, n + 1);
+            str.pop_back();
+        }
+    }
+public:
+    vector<string> letterCasePermutation(string s) {
+        vector<string> res;
+        string str = "";
+        recur(res, s, str, 0);
+        return res;
+    }
+};

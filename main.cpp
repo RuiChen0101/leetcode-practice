@@ -1,34 +1,23 @@
 #include <algorithm>
 #include <iostream>
-#include <queue>
 #include <vector>
 
 using namespace std;
 
-struct ListNode {
-    int val;
-    ListNode* next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode* next) : val(x), next(next) {}
-};
-
-ListNode* reverseList(ListNode* head) {
-    ListNode* curr = head;
-    ListNode* prev = nullptr;
-    if (head == nullptr || head->next == nullptr) {
-        return head;
+int minimumTotal(vector<vector<int>>& triangle) {
+    int len = triangle.size();
+    vector<vector<int>> v(len);
+    v[len - 1] = triangle[len - 1];
+    for (int i = len - 2; i >= 0; i--) {
+        for (int j = 0; j < triangle[i].size(); j++) {
+            v[i].push_back(triangle[i][j] + min(v[i + 1][j], v[i + 1][j + 1]));
+        }
     }
-    while (curr->next != nullptr) {
-        ListNode* next = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = next;
-    }
-    curr->next = prev;
-    head = curr;
-
-    return head;
+    return v[0][0];
 }
 
-int main() { return 0; }
+int main() {
+    vector<vector<int>> tri = {{-10}};
+    cout << minimumTotal(tri) << endl;
+    return 0;
+}

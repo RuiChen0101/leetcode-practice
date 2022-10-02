@@ -1,0 +1,14 @@
+class Solution {
+    int dp(vector<int>& nums, vector<int>& v, int i) {
+        if (i < 0) return 0;
+        if (v[i] != -1) return v[i];
+
+        v[i] = max(nums[i] + dp(nums, v, i - 2), dp(nums, v, i - 1));
+        return v[i];
+    }
+public:
+    int rob(vector<int>& nums) {
+        vector<int> v(nums.size(), -1);
+        return dp(nums, v, nums.size() - 1);
+    }
+};
